@@ -1,27 +1,28 @@
-package com.haoyanbing.data.structure.study.tree.bst;
+package com.haoyanbing.data.structure.avl;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 /**
- * 二分搜索树
+ * AVL树
  * @author haoyanbing
- * @since 2020/2/16 12:42
+ * @since 2020/2/18
  */
-public class BinarySearchTree<E extends Comparable<E>> {
-
+public class AvlTree<K extends Comparable<K>, V> {
     /**
      * 二分搜索树节点内部类
      */
     private class Node {
-        E value;
+        K key;
+        V value;
         Node left, right;
+        int height;
 
-        Node(E value) {
+        Node(K key, V value) {
+            this.key = key;
             this.value = value;
             this.left = null;
             this.right = null;
+            this.height = 1;
         }
     }
 
@@ -37,7 +38,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
     /**
      * 构造函数
      */
-    public BinarySearchTree() {
+    public AvlTree() {
         root = null;
         size = 0;
     }
@@ -59,59 +60,204 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
     /**
-     * 添加元素
-     * @param e 元素
+     * 判断是否时二分搜索树
+     * @return 是否时二分搜索树
      */
-    public void add(E e) {
-        root = add(root, e);
+    public boolean isBST() {
+        List<K> list = new ArrayList<>();
+        inOrder(root, list);
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i).compareTo(list.get(i - 1)) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 中序遍历按顺序放入keys集合
+     * @param node 当前遍历节点
+     * @param keys 输出集合
+     */
+    private void inOrder(Node node, List<K> keys) {
+        if (node == null) {
+            return;
+        }
+        inOrder(node.left, keys);
+        keys.add(node.key);
+        inOrder(node.right, keys);
+    }
+
+    /**
+     * 判断二分树是否时平衡树
+     * @return 是否平衡
+     */
+    public boolean isBalanced() {
+        return isBalanced(root);
+    }
+
+    /**
+     * 以node为根节点的二分树是否是平衡的
+     * @param node 节点
+     * @return 是否是平衡
+     */
+    private boolean isBalanced(Node node) {
+        if (node == null) {
+            return true;
+        }
+        if (Math.abs(getBalanceFactor(node)) > 1) {
+            return false;
+        }
+        return isBalanced(node.left) && isBalanced(node.right);
+    }
+
+    /**
+     * 获取节点高度
+     * @param node 节点
+     * @return 节点高度
+     */
+    private int getHeight(Node node) {
+        return node == null ? 0 : node.height;
+    }
+
+    /**
+     * 获取平衡因子
+     * @param node 节点
+     * @return 节点平衡因子
+     */
+    private int getBalanceFactor(Node node) {
+        return node == null ? 0 : getHeight(node.left) - getHeight(node.right);
+    }
+
+    /**
+     * 对节点y进行向右旋转操作，返回旋转后新的根节点x
+     *        y                              x
+     *       / \                           /   \
+     *      x   T4     向右旋转 (y)        z     y
+     *     / \       - - - - - - - ->    / \   / \
+     *    z   T3                       T1  T2 T3 T4
+     *   / \
+     * T1   T2
+     * @param y 当前根节点
+     * @return 右旋后的新根节点
+     */
+    private Node rightRotate(Node y) {
+        Node x = y.left;
+        y.left = x.right;
+        x.right = y;
+
+        // 更新高度
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
+
+        return x;
+    }
+
+    /**
+     * 对节点y进行向左旋转操作，返回旋转后新的根节点x
+     *    y                             x
+     *  /  \                          /   \
+     * T1   x      向左旋转 (y)       y     z
+     *     / \   - - - - - - - ->   / \   / \
+     *   T2  z                     T1 T2 T3 T4
+     *      / \
+     *     T3 T4
+     * @param y
+     * @return
+     */
+    private Node leftRotate(Node y) {
+        Node x = y.right;
+        y.right = x.left;
+        x.left = y;
+
+        // 更新高度
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
+
+        return x;
+    }
+
+    /**
+     * 添加元素
+     * @param key 键
+     * @param value 值
+     */
+    public void add(K key, V value) {
+        root = add(root, key, value);
     }
 
     /**
      * 递归添加元素
      * @param node 需要添加的父节点
-     * @param e 元素
+     * @param key 键
+     * @param value 值
      * @return 返回新的父节点
      */
-    private Node add(Node node, E e) {
+    private Node add(Node node, K key, V value) {
         if (node == null) {
             ++size;
-            return new Node(e);
+            return new Node(key, value);
         }
-        if (node.value.compareTo(e) > 0) {
-            node.left = add(node.left, e);
-        } else if (node.value.compareTo(e) < 0) {
-            node.right = add(node.right, e);
+        if (node.key.compareTo(key) > 0) {
+            node.left = add(node.left, key, value);
+        } else if (node.key.compareTo(key) < 0) {
+            node.right = add(node.right, key, value);
         } else {
-            node.value = e;
+            node.value = value;
+        }
+        node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
+
+        int balanceFactor = getBalanceFactor(node);
+
+        // LL
+        if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0) {
+            return rightRotate(node);
+        }
+
+        // LR
+        if (balanceFactor > 1 && getBalanceFactor(node.left) < 0) {
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
+        }
+
+        // RR
+        if (balanceFactor < -1 && getBalanceFactor(node.right) <= 0) {
+            return leftRotate(node);
+        }
+
+        // RL
+        if (balanceFactor < -1 && getBalanceFactor(node.right) > 0) {
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
         }
         return node;
     }
 
     /**
      * 判断是否包含元素
-     * @param e 元素
+     * @param k 元素
      * @return 是否包含
      */
-    public boolean contains(E e) {
-        return contains(root, e);
+    public boolean contains(K k) {
+        return contains(root, k);
     }
 
     /**
      * 递归查找是否包含元素
      * @param node 查找的父节点
-     * @param e 元素
+     * @param k 元素
      * @return 返回是否包含
      */
-    private boolean contains(Node node, E e) {
+    private boolean contains(Node node, K k) {
         if (node == null) {
             return false;
         }
-        if (e.compareTo(node.value) == 0) {
+        if (k.compareTo(node.key) == 0) {
             return true;
-        } else if (e.compareTo(node.value) > 0) {
-            return contains(node.right, e);
+        } else if (k.compareTo(node.key) > 0) {
+            return contains(node.right, k);
         } else {
-            return contains(node.left, e);
+            return contains(node.left, k);
         }
     }
 
@@ -128,7 +274,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
      */
     private void perOrder(Node node) {
         if (node != null) {
-            System.out.println(node.value);
+            System.out.println(node.key);
             perOrder(node.left);
             perOrder(node.right);
         }
@@ -145,7 +291,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         stack.push(root);
         while (!stack.isEmpty()) {
             Node curr = stack.pop();
-            System.out.println(curr.value);
+            System.out.println(curr.key);
             if (curr.right != null) {
                 stack.push(curr.right);
             }
@@ -169,7 +315,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
     private void inOrder(Node node) {
         if (node != null) {
             inOrder(node.left);
-            System.out.println(node.value);
+            System.out.println(node.key);
             inOrder(node.right);
         }
     }
@@ -189,7 +335,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         if (node != null) {
             postOrder(node.left);
             postOrder(node.right);
-            System.out.println(node.value);
+            System.out.println(node.key);
         }
     }
 
@@ -204,7 +350,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         queue.add(root);
         while (!queue.isEmpty()) {
             Node curr = queue.remove();
-            System.out.println(curr.value);
+            System.out.println(curr.key);
 
             if (curr.left != null) {
                 queue.add(curr.left);
@@ -219,11 +365,11 @@ public class BinarySearchTree<E extends Comparable<E>> {
      * 查询最小元素
      * @return 最小元素
      */
-    public E minimum() {
+    public K minimum() {
         if (size == 0) {
             throw new IllegalArgumentException("is empty tree");
         }
-        return minimum(root).value;
+        return minimum(root).key;
     }
 
     /**
@@ -242,11 +388,11 @@ public class BinarySearchTree<E extends Comparable<E>> {
      * 查询最大元素
      * @return 最大元素
      */
-    public E maximum() {
+    public K maximum() {
         if (size == 0) {
             throw new IllegalArgumentException("is empty tree");
         }
-        return maximum(root).value;
+        return maximum(root).key;
     }
 
     /**
@@ -265,8 +411,8 @@ public class BinarySearchTree<E extends Comparable<E>> {
      * 删除最小元素
      * @return 最小元素
      */
-    public E removeMin() {
-        E min = minimum();
+    public K removeMin() {
+        K min = minimum();
         removeMin(root);
         return min;
     }
@@ -291,8 +437,8 @@ public class BinarySearchTree<E extends Comparable<E>> {
      * 删除最大元素
      * @return 最大元素
      */
-    public E removeMax() {
-        E max = maximum();
+    public K removeMax() {
+        K max = maximum();
         removeMax(root);
         return max;
     }
@@ -315,27 +461,27 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
     /**
      * 删除指定元素
-     * @param e 待删除元素
+     * @param k 待删除元素
      */
-    public void remove(E e) {
-        remove(root, e);
+    public void remove(K k) {
+        remove(root, k);
     }
 
     /**
      * 删除以node为根节点的二分树中的元素e
      * @param node 当前根节点
-     * @param e 待删除元素
+     * @param k 待删除元素
      * @return 删除元素e之后新的根节点
      */
-    private Node remove(Node node, E e) {
+    private Node remove(Node node, K k) {
         if (node == null) {
             return null;
         }
-        if (e.compareTo(node.value) < 0) {
-            node.left = remove(node.left, e);
+        if (k.compareTo(node.key) < 0) {
+            node.left = remove(node.left, k);
             return node;
-        } else if (e.compareTo(node.value) > 0) {
-            node.right = remove(node.right, e);
+        } else if (k.compareTo(node.key) > 0) {
+            node.right = remove(node.right, k);
             return node;
         } else {
             // 1.待删除节点左节点为空

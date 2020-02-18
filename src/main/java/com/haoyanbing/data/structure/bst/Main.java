@@ -1,4 +1,4 @@
-package com.haoyanbing.data.structure.study.tree.bst;
+package com.haoyanbing.data.structure.bst;
 
 import java.util.Random;
 
