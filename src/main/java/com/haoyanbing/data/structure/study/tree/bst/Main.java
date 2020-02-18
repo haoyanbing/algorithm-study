@@ -13,5 +13,18 @@ public class Main {
             tree.add(new Random().nextInt(1000));
         }
         tree.inOrder();
+        System.out.println("------");
+        System.out.println(tree.minimum());
+        System.out.println(tree.maximum());
+        System.out.println(tree.removeMax());
+        System.out.println("------");
+        tree.inOrder();
+        System.out.println("------");
+        tree.add(100);
+        System.out.println(tree.contains(100));
+        tree.remove(100);
+        System.out.println(tree.contains(100));
+
+        System.out.println(tree.toString());
     }
 }
