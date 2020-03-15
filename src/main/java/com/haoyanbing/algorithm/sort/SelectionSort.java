@@ -1,13 +1,16 @@
 package com.haoyanbing.algorithm.sort;
 
+import com.haoyanbing.algorithm.SortTestHelper;
+
 /**
  * 排序算法-选择排序
+ *
  * @author haoyanbing
  * @since 2020/3/15
  */
 public class SelectionSort {
 
-    private static void sort(Integer[] arr) {
+    private static void sort(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             int min = i;
             for (int j = i + 1; j < arr.length; j++) {
@@ -22,10 +25,13 @@ public class SelectionSort {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = {3, 5, 2, 7, 6, 1, 9, 0};
+        int[] arr = SortTestHelper.generateRandomArray(200000, 1000);
+        long start = System.currentTimeMillis();
         sort(arr);
-        for (Integer value : arr) {
-            System.out.print(" " + value);
-        }
+        long end = System.currentTimeMillis();
+        System.out.println("耗时：" + (end - start) + "ms");
+//        for (Integer value : arr) {
+//            System.out.print(" " + value);
+//        }
     }
 }
