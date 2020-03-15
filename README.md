@@ -1,2 +1,2 @@
-# data-structure-study
-study data structure
+# 数据接口和算法
+数据结构和算法学习demo
