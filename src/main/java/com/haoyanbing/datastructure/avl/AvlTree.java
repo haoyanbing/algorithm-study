@@ -1,4 +1,4 @@
-package com.haoyanbing.data.structure.avl;
+package com.haoyanbing.datastructure.avl;
 
 import java.util.*;
 
