@@ -8,9 +8,10 @@ import com.haoyanbing.algorithm.SortTestHelper;
  * @author haoyanbing
  * @since 2020/3/15
  */
-public class SelectionSort {
+public class SelectionSort implements Sort{
 
-    private static void sort(int[] arr) {
+    @Override
+    public void sort(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             int min = i;
             for (int j = i + 1; j < arr.length; j++) {
@@ -27,7 +28,7 @@ public class SelectionSort {
     public static void main(String[] args) {
         int[] arr = SortTestHelper.generateRandomArray(100000, 1000);
         long start = System.currentTimeMillis();
-        sort(arr);
+        new SelectionSort().sort(arr);
         long end = System.currentTimeMillis();
         System.out.println("耗时：" + (end - start) + "ms");
         System.out.println("isSorted: " + SortTestHelper.isSorted(arr));

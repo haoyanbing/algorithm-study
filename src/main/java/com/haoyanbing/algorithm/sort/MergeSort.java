@@ -8,13 +8,14 @@ import com.haoyanbing.algorithm.SortTestHelper;
  * @author haoyanbing
  * @since 2020/3/17
  */
-public class MergeSort {
+public class MergeSort implements Sort {
 
-    private static void sort(int[] arr) {
+    @Override
+    public void sort(int[] arr) {
         merge(arr, 0, arr.length - 1);
     }
 
-    private static void merge(int[] arr, int l, int r) {
+    private void merge(int[] arr, int l, int r) {
         // 递归到底的情况
         if (l >= r)
             return;
@@ -65,7 +66,7 @@ public class MergeSort {
     public static void main(String[] args) {
         int[] arr = SortTestHelper.generateRandomArray(1000000, 1000);
         long start = System.currentTimeMillis();
-        sort(arr);
+        new MergeSort().sort(arr);
         long end = System.currentTimeMillis();
         System.out.println("耗时：" + (end - start) + "ms");
         System.out.println("isSorted: " + SortTestHelper.isSorted(arr));

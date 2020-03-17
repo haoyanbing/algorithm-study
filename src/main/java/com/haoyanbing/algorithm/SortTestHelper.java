@@ -1,5 +1,10 @@
 package com.haoyanbing.algorithm;
 
+import com.haoyanbing.algorithm.sort.*;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -28,6 +33,7 @@ public class SortTestHelper {
 
     /**
      * 判断数组是否有序(升序)
+     *
      * @param arr 数组
      * @return 是否有序
      */
@@ -38,5 +44,26 @@ public class SortTestHelper {
             }
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        Map<String, Sort> map = new HashMap<>();
+        map.put("SelectionSort", new SelectionSort());
+        map.put("InsertionSort", new InsertionSort());
+        map.put("ShellSort", new ShellSort());
+        map.put("MergeSort", new MergeSort());
+
+        int[] arr = generateRandomArray(200000, 1000);
+
+        for (Map.Entry<String, Sort> entry : map.entrySet()) {
+            int[] arrCopy = Arrays.copyOf(arr, arr.length);
+            long start = System.currentTimeMillis();
+            entry.getValue().sort(arrCopy);
+            long end = System.currentTimeMillis();
+            System.out.println(entry.getKey() + ": " + (end - start) + "ms");
+            System.out.println("isSorted: " + SortTestHelper.isSorted(arrCopy));
+            System.out.println("------------------------");
+        }
+
     }
 }
