@@ -25,13 +25,11 @@ public class SelectionSort {
     }
 
     public static void main(String[] args) {
-        int[] arr = SortTestHelper.generateRandomArray(200000, 1000);
+        int[] arr = SortTestHelper.generateRandomArray(100000, 1000);
         long start = System.currentTimeMillis();
         sort(arr);
         long end = System.currentTimeMillis();
         System.out.println("耗时：" + (end - start) + "ms");
-//        for (Integer value : arr) {
-//            System.out.print(" " + value);
-//        }
+        System.out.println("isSorted: " + SortTestHelper.isSorted(arr));
     }
 }

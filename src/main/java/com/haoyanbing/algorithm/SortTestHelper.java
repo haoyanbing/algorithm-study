@@ -26,4 +26,17 @@ public class SortTestHelper {
         return arr;
     }
 
+    /**
+     * 判断数组是否有序(升序)
+     * @param arr 数组
+     * @return 是否有序
+     */
+    public static boolean isSorted(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < arr[i - 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
