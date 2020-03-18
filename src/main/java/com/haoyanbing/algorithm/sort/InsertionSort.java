@@ -1,7 +1,5 @@
 package com.haoyanbing.algorithm.sort;
 
-import com.haoyanbing.algorithm.SortTestHelper;
-
 import java.util.Arrays;
 
 /**
@@ -17,8 +15,8 @@ public class InsertionSort implements Sort {
      *
      * @param arr 数组
      */
-    @Override
-    public void sort(int[] arr) {
+//    @Override
+    public void sort2(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = i; j > 0 && arr[j] < arr[j - 1]; j--) {
                 // 交换位置 arr[j] 和 arr[j-1] 的位置
@@ -35,7 +33,8 @@ public class InsertionSort implements Sort {
      *
      * @param arr 数组
      */
-    private void sort2(int[] arr) {
+    @Override
+    public void sort(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             int temp = arr[i];
             int j;

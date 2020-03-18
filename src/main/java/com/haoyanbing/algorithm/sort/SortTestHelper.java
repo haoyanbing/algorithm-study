@@ -1,6 +1,4 @@
-package com.haoyanbing.algorithm;
-
-import com.haoyanbing.algorithm.sort.*;
+package com.haoyanbing.algorithm.sort;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,7 +45,7 @@ public class SortTestHelper {
     }
 
     public static void main(String[] args) {
-        Map<String, Sort> map = new HashMap<>();
+        Map<String, Sort> map = new HashMap<>(10);
         map.put("SelectionSort", new SelectionSort());
         map.put("InsertionSort", new InsertionSort());
         map.put("ShellSort", new ShellSort());
