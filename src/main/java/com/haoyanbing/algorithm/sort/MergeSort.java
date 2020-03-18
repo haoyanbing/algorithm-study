@@ -38,20 +38,16 @@ public class MergeSort implements Sort {
         for (int k = 0; k < aux.length; k++) {
             if (i > m) {
                 // 情况1：左边数组已经比较完了，直接使用右边数组
-                aux[k] = arr[j];
-                j++;
+                aux[k] = arr[j++];
             } else if (j > r) {
                 // 情况2：右边数组已经比较完了，直接使用左边数组
-                aux[k] = arr[i];
-                i++;
+                aux[k] = arr[i++];
             } else if (arr[i] < arr[j]) {
                 // 情况3：左边数组当前值比右边小，使用左边的值
-                aux[k] = arr[i];
-                i++;
+                aux[k] = arr[i++];
             } else {
                 // 情况3：右边数组当前值比坐标小，使用右边的值
-                aux[k] = arr[j];
-                j++;
+                aux[k] = arr[j++];
             }
         }
 

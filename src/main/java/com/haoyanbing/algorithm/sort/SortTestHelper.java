@@ -48,10 +48,11 @@ public class SortTestHelper {
         Map<String, Sort> map = new HashMap<>(10);
         map.put("SelectionSort", new SelectionSort());
         map.put("InsertionSort", new InsertionSort());
+        map.put("BubbleSort", new BubbleSort());
         map.put("ShellSort", new ShellSort());
         map.put("MergeSort", new MergeSort());
 
-        int[] arr = generateRandomArray(200000, 1000);
+        int[] arr = generateRandomArray(10000, 1000);
 
         for (Map.Entry<String, Sort> entry : map.entrySet()) {
             int[] arrCopy = Arrays.copyOf(arr, arr.length);
