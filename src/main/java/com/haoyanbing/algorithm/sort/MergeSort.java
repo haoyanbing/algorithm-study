@@ -8,6 +8,10 @@ package com.haoyanbing.algorithm.sort;
  */
 public class MergeSort implements Sort {
 
+    /**
+     * 递归
+     * @param arr 数组
+     */
     @Override
     public void sort(int[] arr) {
         merge(arr, 0, arr.length - 1);
@@ -22,7 +26,22 @@ public class MergeSort implements Sort {
         int m = (l + r) / 2;
         merge(arr, l, m);
         merge(arr, m + 1, r);
+        innerMerge(arr, l, m, r);
+    }
 
+    /**
+     * 自底向上 非递归
+     * @param arr 数组
+     */
+    private void mergeBottomUp(int[] arr) {
+        for (int i = 1; i < arr.length; i += i) {
+            for (int j = 0; j + i < arr.length; j += i + i) {
+                innerMerge(arr, j, j + i - 1, Math.min(j + i + i - 1, arr.length - 1));
+            }
+        }
+    }
+
+    private void innerMerge(int[] arr, int l, int m, int r) {
         // 优化点：如果已经有序则不需要往下进行
         if (arr[m] < arr[m + 1])
             return;
