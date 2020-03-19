@@ -34,9 +34,10 @@ public class MergeSort implements Sort {
      * @param arr 数组
      */
     private void mergeBottomUp(int[] arr) {
-        for (int i = 1; i < arr.length; i += i) {
-            for (int j = 0; j + i < arr.length; j += i + i) {
-                innerMerge(arr, j, j + i - 1, Math.min(j + i + i - 1, arr.length - 1));
+        for (int gap = 1; gap < arr.length; gap += gap) {
+            for (int j = 0; j + gap < arr.length; j += gap + gap) {
+                // 对arr[j ~ j + gap -1] 和 arr[j + gap ~ j + 2*gap -1 ]
+                innerMerge(arr, j, j + gap - 1, Math.min(j + 2*gap - 1, arr.length - 1));
             }
         }
     }
