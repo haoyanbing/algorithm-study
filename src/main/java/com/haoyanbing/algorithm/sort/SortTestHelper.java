@@ -51,8 +51,9 @@ public class SortTestHelper {
         map.put("BubbleSort", new BubbleSort());
         map.put("ShellSort", new ShellSort());
         map.put("MergeSort", new MergeSort());
+        map.put("QuickSort3", new QuickSort3());
 
-        int[] arr = generateRandomArray(10000, 1000);
+        int[] arr = generateRandomArray(100000, 1000);
 
         for (Map.Entry<String, Sort> entry : map.entrySet()) {
             int[] arrCopy = Arrays.copyOf(arr, arr.length);
