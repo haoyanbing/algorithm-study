@@ -1,5 +1,7 @@
 package com.haoyanbing.datastructure.heap;
 
+import com.haoyanbing.algorithm.sort.SortTestHelper;
+
 /**
  * 二叉堆-最大堆
  *
@@ -18,6 +20,18 @@ public class MaxHeap {
     public MaxHeap(int capacity) {
         data = new int[capacity + 1];
         count = 0;
+    }
+
+    public MaxHeap(int[] arr) {
+        data = new int[arr.length + 1];
+        count = arr.length;
+        for (int i = 0; i < arr.length; i++) {
+            data[i + 1] = arr[i];
+        }
+        // heapify 堆化
+        for (int i = count / 2; i >= 1; i--) {
+            shiftDown(i);
+        }
     }
 
     public void insert(int item) {
@@ -48,7 +62,7 @@ public class MaxHeap {
             int j = 2 * k; // 在此次循环中，data[k]和data[j]交换位置，默认j为k的左子节点
             // 如果有右子节点且右子节点大于左子节点，则j++为右子节点
             if (j + 1 <= count && data[j + 1] > data[j]) {
-                j++;
+                j += 1;
             }
             // 判断子节点中的较大的那个是否还是小于k节点的数值，是的话终止循环
             if (data[k] >= data[j]) {
@@ -64,7 +78,7 @@ public class MaxHeap {
     private void swap(int[] data, int i, int j) {
         int temp = data[i];
         data[i] = data[j];
-        data[i] = temp;
+        data[j] = temp;
     }
 
     public static void main(String[] args) {
@@ -72,7 +86,6 @@ public class MaxHeap {
         for (int i = 0; i < 100; i++) {
             heap.insert(i);
         }
-
         for (int i = 0; i < 100; i++) {
             System.out.println(heap.extractMax());
         }
