@@ -36,7 +36,7 @@ public class MaxHeap {
 
     public void insert(int item) {
         data[++count] = item;
-        shiftUp(count - 1);
+        shiftUp(count);
     }
 
     public int extractMax() {

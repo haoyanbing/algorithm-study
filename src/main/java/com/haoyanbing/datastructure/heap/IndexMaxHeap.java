@@ -1,7 +1,10 @@
 package com.haoyanbing.datastructure.heap;
 
+import java.util.Random;
+
 /**
  * 二叉堆-最大索引堆
+ *
  * @author haoyanbing
  * @since 2020/3/22
  */
@@ -21,37 +24,26 @@ public class IndexMaxHeap {
         count = 0;
     }
 
-    public IndexMaxHeap(int[] arr) {
-        data = new int[arr.length + 1];
-        count = arr.length;
-        for (int i = 0; i < arr.length; i++) {
-            data[i + 1] = arr[i];
-        }
-        // heapify 堆化
-        for (int i = count / 2; i >= 1; i--) {
-            shiftDown(i);
-        }
-    }
-
     public void insert(int item) {
         data[++count] = item;
-        shiftUp(count - 1);
+        indexes[count] = count;
+        shiftUp(count);
     }
 
     public int extractMax() {
         if (count <= 0) {
             throw new IllegalArgumentException("堆为空");
         }
-        int ret = data[1];
-        data[1] = data[count];
+        int ret = data[indexes[1]];
+        indexes[1] = indexes[count];
         count--;
         shiftDown(1);
         return ret;
     }
 
     private void shiftUp(int k) {
-        while (k > 1 && data[k / 2] < data[k]) {
-            swap(data, k / 2, k);
+        while (k > 1 && data[indexes[k / 2]] < data[indexes[k]]) {
+            swap(indexes, k / 2, k);
             k /= 2;
         }
     }
@@ -60,15 +52,15 @@ public class IndexMaxHeap {
         while (2 * k <= count) {
             int j = 2 * k; // 在此次循环中，data[k]和data[j]交换位置，默认j为k的左子节点
             // 如果有右子节点且右子节点大于左子节点，则j++为右子节点
-            if (j + 1 <= count && data[j + 1] > data[j]) {
+            if (j + 1 <= count && data[indexes[j + 1]] > data[indexes[j]]) {
                 j += 1;
             }
             // 判断子节点中的较大的那个是否还是小于k节点的数值，是的话终止循环
-            if (data[k] >= data[j]) {
+            if (data[indexes[k]] >= data[indexes[j]]) {
                 break;
             }
             // 否则交换位置
-            swap(data, k, j);
+            swap(indexes, k, j);
             // k = j，继续循环
             k = j;
         }
@@ -80,4 +72,13 @@ public class IndexMaxHeap {
         data[j] = temp;
     }
 
+    public static void main(String[] args) {
+        IndexMaxHeap heap = new IndexMaxHeap(100);
+        for (int i = 0; i < 100; i++) {
+            heap.insert(new Random().nextInt(100));
+        }
+        for (int i = 0; i < 100; i++) {
+            System.out.println(heap.extractMax());
+        }
+    }
 }
