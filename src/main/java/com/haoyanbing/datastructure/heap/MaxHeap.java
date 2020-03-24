@@ -1,7 +1,5 @@
 package com.haoyanbing.datastructure.heap;
 
-import com.haoyanbing.algorithm.sort.SortTestHelper;
-
 /**
  * 二叉堆-最大堆
  *
@@ -51,6 +49,7 @@ public class MaxHeap {
     }
 
     private void shiftUp(int k) {
+        // 循环与父节点值比较，大于父节点值的话就交换位置
         while (k > 1 && data[k / 2] < data[k]) {
             swap(data, k / 2, k);
             k /= 2;

@@ -14,6 +14,9 @@ public class IndexMaxHeap {
      */
     private int[] data;
 
+    /**
+     * 索引数组，存储data中元素下标，真正交换位置的是这个数组，data中元素不会动
+     */
     private int[] indexes;
 
     private int count;
