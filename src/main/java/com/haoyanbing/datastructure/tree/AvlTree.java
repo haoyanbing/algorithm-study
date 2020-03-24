@@ -1,4 +1,4 @@
-package com.haoyanbing.datastructure.avl;
+package com.haoyanbing.datastructure.tree;
 
 import java.util.*;
 
@@ -507,5 +507,15 @@ public class AvlTree<K extends Comparable<K>, V> {
             node.left = node.right = null;
             return successor;
         }
+    }
+
+    public static void main(String[] args) {
+        AvlTree<Integer, String> tree = new AvlTree<>();
+        for (int i = 0; i < 100; i++) {
+            tree.add(i, i + "");
+        }
+        tree.inOrder();
+        System.out.println(tree.isBalanced());
+        System.out.println(tree.isBST());
     }
 }
