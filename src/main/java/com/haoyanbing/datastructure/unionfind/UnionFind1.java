@@ -13,7 +13,7 @@ public class UnionFind1 {
     private int count;
 
     public UnionFind1(int n) {
-        this.count = 0;
+        this.count = n;
         this.data = new int[n];
         for (int i = 0; i < n; i++) {
             this.data[i] = i;

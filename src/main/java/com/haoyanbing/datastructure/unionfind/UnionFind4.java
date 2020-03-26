@@ -10,7 +10,7 @@ public class UnionFind4 {
 
     private int[] parent;
 
-    // size[i]表示以i为根的集合中元素的个数
+    // size[i]表示以i为根的集合中元素的深度
     private int[] rank;
 
     public UnionFind4(int n) {
