@@ -176,6 +176,26 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
     /**
+     * 中序遍历-非递归版
+     */
+    public void inOrderNR() {
+        if (root == null) {
+            return;
+        }
+        Stack<Node> stack = new Stack<>();
+        Node curr = root;
+        while (!stack.isEmpty() || curr != null) {
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            }
+            curr = stack.pop();
+            System.out.println(curr.value);
+            curr = curr.right;
+        }
+    }
+
+    /**
      * 后序遍历
      */
     public void postOrder() {
