@@ -1,5 +1,7 @@
 package com.haoyanbing.datastructure.graph;
 
+import java.util.Random;
+
 /**
  * 图-邻接矩阵
  *
@@ -26,7 +28,7 @@ public class DenseGraph {
     }
 
     public void addEdge(int v, int w) {
-        if (v <= 0 || v > n || w <= 0 || w > n) {
+        if (v < 0 || v > n || w < 0 || w > n) {
             throw new IllegalArgumentException();
         }
 
@@ -49,5 +51,50 @@ public class DenseGraph {
 
     public int e() {
         return m;
+    }
+
+    public Iterator iterator(int v) {
+        return new Iterator(v);
+    }
+
+    class Iterator {
+        private int index;
+        private int v;
+
+        public Iterator(int v) {
+            this.index = 0;
+            this.v = v;
+        }
+
+        public boolean hasNext() {
+            for (; index < n; index++) {
+                if (g[v][index]) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int next() {
+            return index++;
+        }
+    }
+
+    public static void main(String[] args) {
+        DenseGraph graph = new DenseGraph(10, false);
+        Random random = new Random();
+        for (int i = 0; i < 100; i++) {
+            graph.addEdge(random.nextInt(10), random.nextInt(10));
+        }
+
+        for (int i = 0; i < 10; i++) {
+            Iterator iterator = graph.iterator(i);
+            System.out.print(i + " : ");
+            while (iterator.hasNext()) {
+                System.out.print(iterator.next() + ", ");
+            }
+            System.out.println();
+        }
+
     }
 }

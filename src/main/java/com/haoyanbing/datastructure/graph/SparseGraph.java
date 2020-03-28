@@ -2,6 +2,7 @@ package com.haoyanbing.datastructure.graph;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 图-邻接表
@@ -27,7 +28,7 @@ public class SparseGraph {
     }
 
     public void addEdge(int v, int w) {
-        if (v <= 0 || v > n || w <= 0 || w > n) {
+        if (v < 0 || v > n || w < 0 || w > n) {
             throw new IllegalArgumentException();
         }
 
@@ -52,5 +53,45 @@ public class SparseGraph {
 
     public int e() {
         return m;
+    }
+
+    public Iterator iterator(int v) {
+        return new Iterator(v);
+    }
+
+    class Iterator {
+        private int index;
+        private int v;
+
+        public Iterator(int v) {
+            this.index = 0;
+            this.v = v;
+        }
+
+        public boolean hasNext() {
+            return g[v].size() > index;
+        }
+
+        public int next() {
+            return g[v].get(index++);
+        }
+    }
+
+    public static void main(String[] args) {
+        SparseGraph graph = new SparseGraph(10, false);
+        Random random = new Random();
+        for (int i = 0; i < 100; i++) {
+            graph.addEdge(random.nextInt(10), random.nextInt(10));
+        }
+
+        for (int i = 0; i < 10; i++) {
+            Iterator iterator = graph.iterator(i);
+            System.out.print(i + " : ");
+            while (iterator.hasNext()) {
+                System.out.print(iterator.next() + ", ");
+            }
+            System.out.println();
+        }
+
     }
 }
