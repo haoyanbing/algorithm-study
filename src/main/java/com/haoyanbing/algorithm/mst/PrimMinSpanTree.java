@@ -1,4 +1,4 @@
-package com.haoyanbing.algorithm.min.span.tree;
+package com.haoyanbing.algorithm.mst;
 
 import com.haoyanbing.datastructure.graph.DenseWightGraph;
 import com.haoyanbing.datastructure.graph.Edge;
