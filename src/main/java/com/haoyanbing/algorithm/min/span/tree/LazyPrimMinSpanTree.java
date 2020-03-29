@@ -2,7 +2,7 @@ package com.haoyanbing.algorithm.min.span.tree;
 
 import com.haoyanbing.datastructure.graph.DenseWightGraph;
 import com.haoyanbing.datastructure.graph.Edge;
-import com.haoyanbing.datastructure.heap.Heap;
+import com.haoyanbing.datastructure.heap.CommonMaxHeap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +14,21 @@ import java.util.List;
  * @since 2020/3/29
  */
 public class LazyPrimMinSpanTree<W extends Comparable<W>> {
+
     private DenseWightGraph<W> graph;
-    private Heap<Edge<W>> heap;
+
+    // 最大堆
+    private CommonMaxHeap<Edge<W>> heap;
+
+    // 访问过的节点
     private boolean[] marked;
+
+    // 最小生成树的所有边
     private List<Edge<W>> mst;
 
     public LazyPrimMinSpanTree(DenseWightGraph<W> graph) {
         this.graph = graph;
-        this.heap = new Heap<>(graph.v() + 1);
+        this.heap = new CommonMaxHeap<>(graph.v() + 1);
         marked = new boolean[graph.v()];
         mst = new ArrayList<>();
 

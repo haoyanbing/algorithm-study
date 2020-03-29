@@ -2,7 +2,7 @@ package com.haoyanbing.algorithm.min.span.tree;
 
 import com.haoyanbing.datastructure.graph.DenseWightGraph;
 import com.haoyanbing.datastructure.graph.Edge;
-import com.haoyanbing.datastructure.heap.IndexHeap;
+import com.haoyanbing.datastructure.heap.CommonIndexMaxHeap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +15,13 @@ import java.util.List;
  */
 public class PrimMinSpanTree<W extends Comparable<W>> {
     private DenseWightGraph<W> graph;
-    private IndexHeap<Edge<W>> heap;
+    private CommonIndexMaxHeap<Edge<W>> heap;
     private boolean[] marked;
     private List<Edge<W>> mst;
 
     public PrimMinSpanTree(DenseWightGraph<W> graph) {
         this.graph = graph;
-        this.heap = new IndexHeap<>(graph.v() + 1);
+        this.heap = new CommonIndexMaxHeap<>(graph.v() + 1);
         marked = new boolean[graph.v()];
         mst = new ArrayList<>();
 

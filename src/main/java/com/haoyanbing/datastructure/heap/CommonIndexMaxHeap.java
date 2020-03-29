@@ -8,7 +8,7 @@ import java.util.Random;
  * @author haoyanbing
  * @since 2020/3/22
  */
-public class IndexHeap<T extends Comparable<T>> {
+public class CommonIndexMaxHeap<T extends Comparable<T>> {
     /**
      * 第一个元素不用，从下标为1开始使用
      */
@@ -23,7 +23,7 @@ public class IndexHeap<T extends Comparable<T>> {
 
     private int capacity;
 
-    public IndexHeap(int capacity) {
+    public CommonIndexMaxHeap(int capacity) {
         this.capacity = capacity;
         data = new Object[capacity + 1];
         indexes = new int[capacity + 1];
@@ -114,7 +114,7 @@ public class IndexHeap<T extends Comparable<T>> {
     }
 
     public static void main(String[] args) {
-        IndexHeap heap = new IndexHeap(100);
+        CommonIndexMaxHeap heap = new CommonIndexMaxHeap(100);
         for (int i = 0; i < 100; i++) {
             heap.insert(new Random().nextInt(100));
         }

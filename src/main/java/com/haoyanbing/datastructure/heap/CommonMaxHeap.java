@@ -6,7 +6,7 @@ package com.haoyanbing.datastructure.heap;
  * @author haoyanbing
  * @since 2020/3/29
  */
-public class Heap<T extends Comparable<T>> {
+public class CommonMaxHeap<T extends Comparable<T>> {
 
     /**
      * 第一个元素不用，从下标为1开始使用
@@ -15,12 +15,12 @@ public class Heap<T extends Comparable<T>> {
 
     private int count;
 
-    public Heap(int capacity) {
+    public CommonMaxHeap(int capacity) {
         data = new Object[capacity + 1];
         count = 0;
     }
 
-    public Heap(T[] arr) {
+    public CommonMaxHeap(T[] arr) {
         data = new Object[arr.length + 1];
         count = arr.length;
         for (int i = 0; i < arr.length; i++) {
@@ -85,7 +85,7 @@ public class Heap<T extends Comparable<T>> {
     }
 
     public static void main(String[] args) {
-        Heap<Integer> heap = new Heap<>(100);
+        CommonMaxHeap<Integer> heap = new CommonMaxHeap<>(100);
         for (int i = 0; i < 100; i++) {
             heap.insert(i);
         }
