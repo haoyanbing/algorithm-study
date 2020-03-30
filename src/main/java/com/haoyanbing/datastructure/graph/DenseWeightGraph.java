@@ -8,14 +8,14 @@ import java.util.Random;
  * @author haoyanbing
  * @since 2020/3/28
  */
-public class DenseWightGraph<W extends Comparable<W>> {
+public class DenseWeightGraph<W extends Comparable<W>> {
 
     private int n, m;
     // 是否有向图
     private boolean directed;
     private Edge<W>[][] g;
 
-    public DenseWightGraph(int n, boolean isDirected) {
+    public DenseWeightGraph(int n, boolean isDirected) {
         this.n = n;
         this.m = 0;
         this.directed = isDirected;
@@ -78,14 +78,14 @@ public class DenseWightGraph<W extends Comparable<W>> {
     }
 
     public static void main(String[] args) {
-        DenseWightGraph graph = new DenseWightGraph<Integer>(10, false);
+        DenseWeightGraph graph = new DenseWeightGraph<Integer>(10, false);
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
             graph.addEdge(random.nextInt(10), random.nextInt(10), random.nextInt(10));
         }
 
         for (int i = 0; i < 10; i++) {
-            DenseWightGraph.Iterator iterator = graph.iterator(i);
+            DenseWeightGraph.Iterator iterator = graph.iterator(i);
             System.out.print(i + " : ");
             while (iterator.hasNext()) {
                 Edge<Integer> edge = iterator.next();

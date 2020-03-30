@@ -1,6 +1,6 @@
 package com.haoyanbing.algorithm.mst;
 
-import com.haoyanbing.datastructure.graph.DenseWightGraph;
+import com.haoyanbing.datastructure.graph.DenseWeightGraph;
 import com.haoyanbing.datastructure.graph.Edge;
 import com.haoyanbing.datastructure.heap.CommonIndexMaxHeap;
 
@@ -14,12 +14,12 @@ import java.util.List;
  * @since 2020/3/29
  */
 public class PrimMinSpanTree<W extends Comparable<W>> {
-    private DenseWightGraph<W> graph;
+    private DenseWeightGraph<W> graph;
     private CommonIndexMaxHeap<Edge<W>> heap;
     private boolean[] marked;
     private List<Edge<W>> mst;
 
-    public PrimMinSpanTree(DenseWightGraph<W> graph) {
+    public PrimMinSpanTree(DenseWeightGraph<W> graph) {
         this.graph = graph;
         this.heap = new CommonIndexMaxHeap<>(graph.v() + 1);
         marked = new boolean[graph.v()];
@@ -44,7 +44,7 @@ public class PrimMinSpanTree<W extends Comparable<W>> {
     private void visit(int v) {
         if (marked[v]) return;
         marked[v] = true;
-        DenseWightGraph<W>.Iterator iterator = graph.iterator(v);
+        DenseWeightGraph<W>.Iterator iterator = graph.iterator(v);
         while (iterator.hasNext()) {
             Edge<W> edge = iterator.next();
             if (!marked[edge.other(v)]) {
@@ -63,7 +63,7 @@ public class PrimMinSpanTree<W extends Comparable<W>> {
     }
 
     public static void main(String[] args) {
-        DenseWightGraph<Integer> graph = new DenseWightGraph<>(7, false);
+        DenseWeightGraph<Integer> graph = new DenseWeightGraph<>(7, false);
         graph.addEdge(0, 1, 10);
         graph.addEdge(0, 6, 20);
         graph.addEdge(0, 2, 100);
