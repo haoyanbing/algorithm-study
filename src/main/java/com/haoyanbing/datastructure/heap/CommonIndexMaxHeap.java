@@ -78,6 +78,17 @@ public class CommonIndexMaxHeap<T extends Comparable<T>> {
         return (T) ret;
     }
 
+    public int extractMaxIndex() {
+        if (count <= 0) {
+            throw new IllegalArgumentException("堆为空");
+        }
+        int ret = indexes[1] - 1;
+        indexes[1] = indexes[count];
+        count--;
+        shiftDown(1);
+        return ret;
+    }
+
     private void shiftUp(int k) {
         while (k > 1 && ((T) data[indexes[k / 2]]).compareTo((T) data[indexes[k]]) < 0) {
             swap(indexes, k / 2, k);
@@ -105,6 +116,15 @@ public class CommonIndexMaxHeap<T extends Comparable<T>> {
 
     public boolean isEmpty() {
         return count == 0;
+    }
+
+    public boolean contains(T t) {
+        for (Object datum : data) {
+            if (t.equals(datum)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void swap(int[] data, int i, int j) {
